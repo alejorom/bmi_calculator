@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../widgets/widgets.dart';
 
 const double buttonContainerHeight = 60;
 const int activeCardColor = 0xFF1D1E33;
@@ -28,11 +30,19 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ContainerCard(
                     color: Color(activeCardColor),
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.mars,
+                      text: 'MALE',
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ContainerCard(
                     color: Color(activeCardColor),
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.venus,
+                      text: 'FEMALE',
+                    ),
                   ),
                 ),
               ],
@@ -64,24 +74,10 @@ class _InputPageState extends State<InputPage> {
             margin: const EdgeInsets.only(top: 10.0),
             width: double.infinity,
             height: buttonContainerHeight,
-          )
+          ),
         ],
       ),
     );
   }
 }
 
-class ContainerCard extends StatelessWidget {
-  const ContainerCard({Key? key, required this.color}) : super(key: key);
-  final Color color;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-    );
-  }
-}
