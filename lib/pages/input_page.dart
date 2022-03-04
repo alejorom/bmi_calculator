@@ -3,8 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/widgets.dart';
 
 const double buttonContainerHeight = 60;
-const int activeCardColor = 0xFF1D1E33;
-const int buttonContainerColor = 0xFFEB1555;
+const activeCardColor = Color(0xFF1D1E33);
+const inactiveCardColor = Color(0xFF111328);
+const buttonContainerColor = Color(0xFFEB1555);
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -14,6 +15,24 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  Color maleCardColor = inactiveCardColor;
+  Color femaleCardColor = inactiveCardColor;
+
+  // Actualizar color tarjeta seleccionada.
+  void updateColor(int gender) {
+    // gender = 1 MALE.
+    if (gender == 1) {
+      femaleCardColor = inactiveCardColor;
+      maleCardColor = (maleCardColor == inactiveCardColor) ? activeCardColor: inactiveCardColor;
+    }
+
+    // gender = 2 FEMALE
+    if (gender == 2) {
+      maleCardColor = inactiveCardColor;
+      femaleCardColor = (femaleCardColor == inactiveCardColor) ? activeCardColor: inactiveCardColor;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,22 +45,36 @@ class _InputPageState extends State<InputPage> {
         children: <Widget>[
           Expanded(
             child: Row(
-              children: const <Widget>[
+              children: <Widget>[
                 Expanded(
-                  child: ContainerCard(
-                    color: Color(activeCardColor),
-                    cardChild: IconContent(
-                      icon: FontAwesomeIcons.mars,
-                      text: 'MALE',
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateColor(1);
+                      });
+                    },
+                    child: ContainerCard(
+                      color: maleCardColor,
+                      cardChild: const IconContent(
+                        icon: FontAwesomeIcons.mars,
+                        text: 'MALE',
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: ContainerCard(
-                    color: Color(activeCardColor),
-                    cardChild: IconContent(
-                      icon: FontAwesomeIcons.venus,
-                      text: 'FEMALE',
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        updateColor(2);
+                      });
+                    },
+                    child: ContainerCard(
+                      color: femaleCardColor,
+                      cardChild: const IconContent(
+                        icon: FontAwesomeIcons.venus,
+                        text: 'FEMALE',
+                      ),
                     ),
                   ),
                 ),
@@ -50,7 +83,7 @@ class _InputPageState extends State<InputPage> {
           ),
           const Expanded(
             child: ContainerCard(
-              color: Color(activeCardColor),
+              color: activeCardColor,
             ),
           ),
           Expanded(
@@ -58,19 +91,19 @@ class _InputPageState extends State<InputPage> {
               children: const <Widget>[
                 Expanded(
                   child: ContainerCard(
-                    color: Color(activeCardColor),
+                    color: activeCardColor,
                   ),
                 ),
                 Expanded(
                   child: ContainerCard(
-                    color: Color(activeCardColor),
+                    color: activeCardColor,
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            color: const Color(buttonContainerColor),
+            color: buttonContainerColor,
             margin: const EdgeInsets.only(top: 10.0),
             width: double.infinity,
             height: buttonContainerHeight,
@@ -80,4 +113,3 @@ class _InputPageState extends State<InputPage> {
     );
   }
 }
-
