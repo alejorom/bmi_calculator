@@ -17,16 +17,18 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender? selectedGender;
+  int height = 180;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Center(
-          child: Text('BMI CALCULATOR'),
+          child: Text('CALCULADORA BMI'),
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
@@ -38,10 +40,12 @@ class _InputPageState extends State<InputPage> {
                         selectedGender = Gender.male;
                       });
                     },
-                    color: selectedGender == Gender.male? activeCardColor : inactiveCardColor,
+                    color: selectedGender == Gender.male
+                        ? activeCardColor
+                        : inactiveCardColor,
                     cardChild: const IconContent(
                       icon: FontAwesomeIcons.mars,
-                      text: 'MALE',
+                      text: 'HOMBRE',
                     ),
                   ),
                 ),
@@ -52,19 +56,48 @@ class _InputPageState extends State<InputPage> {
                         selectedGender = Gender.female;
                       });
                     },
-                    color: selectedGender == Gender.female? activeCardColor : inactiveCardColor,
+                    color: selectedGender == Gender.female
+                        ? activeCardColor
+                        : inactiveCardColor,
                     cardChild: const IconContent(
                       icon: FontAwesomeIcons.venus,
-                      text: 'FEMALE',
+                      text: 'MUJER',
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          const Expanded(
+          Expanded(
             child: ContainerCard(
               color: activeCardColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text('ALTURA', style: labelTextStyle),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Text(height.toString(), style: numberTextStyle),
+                      const Text('cms', style: labelTextStyle),
+                      Slider(
+                        value: height.toDouble(),
+                        activeColor: activeSliderColor,
+                        inactiveColor: inactiveSliderColor,
+                        onChanged: (double newValue) {
+                          setState(() {
+                            height = newValue.round();
+                          });
+                        },
+                        min: 120.0,
+                        max: 220.0,
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
           Expanded(
